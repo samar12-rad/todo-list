@@ -17,6 +17,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '18'
+
   lint:
     name: ESLint
     runs-on: ubuntu-latest
@@ -51,6 +52,11 @@ jobs:
 
       - name: Install dependencies
         run: npm install
+
+      - name: Start server
+        run: npm run dev &
+        env:
+          CI: true
 
       - name: Run Cypress tests
         run: npx cypress run --spec "cypress/e2e/0-custom-tests/**/*"
