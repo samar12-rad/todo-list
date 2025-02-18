@@ -144,7 +144,9 @@ describe('Todo App', () => {
     cy.get('.table-data').should('have.length', 1);
     // check the length of right tables of input1 and input 2 page
     //check the task.id of the first row of input1 and input2 page right table
+    cy.wait(1000);
     cy.get('.input1').click();
+    cy.wait(1000);
     cy.get('@taskId1').then((taskId1) => {
       cy.get('.right-table-data tr')
         .first()
