@@ -58,3 +58,4 @@ jobs:
           start: npm run start
           wait-on: 'http://localhost:3000'
           browser: chrome
+          spec: 'cypress/0-custom-tests/**/*.cy.js'
