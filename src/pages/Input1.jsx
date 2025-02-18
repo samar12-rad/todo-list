@@ -32,7 +32,7 @@ const Input1 = () => {
         console.error('Error fetching data:', error);
         setLoading(false);
       });
-  }, []);
+  }, [refresh]);
 
   const moveRowToRightTable = (row) => {
     const rowWithPageId = { ...row, pageid: 'input1' };

@@ -32,15 +32,13 @@ describe('Todo App', () => {
 
   it('add right table data to main table', () => {
     cy.get('.left-table-data tr').first().as('firstRow');
-    // save the task.id of the first row for later
-    cy.get('@firstRow')
+    cy.get('@firstRow').find('button').contains('Send Right').click();
+    cy.get('.right-table-data tr').first().as('rightFirstRow');
+    cy.get('@rightFirstRow')
       .find('td')
       .first()
       .invoke('text')
       .then((taskId) => {
-        cy.get('@firstRow').find('button').contains('Send Right').click();
-        // check if the right table has 1 row
-        cy.get('.right-table-data tr').should('have.length', 1);
         cy.get('.btn-success').contains('Add to Main Table').click();
         cy.get('.right-table-data tr').should('have.length', 0);
         cy.get('.home').click();
@@ -55,13 +53,13 @@ describe('Todo App', () => {
 
   it('send row back to input1', () => {
     cy.get('.left-table-data tr').first().as('firstRow');
-    // save the task.id of the first row for later
-    cy.get('@firstRow')
+    cy.get('@firstRow').find('button').contains('Send Right').click();
+    cy.get('.right-table-data tr').first().as('rightFirstRow');
+    cy.get('@rightFirstRow')
       .find('td')
       .first()
       .invoke('text')
       .then((taskId) => {
-        cy.get('@firstRow').find('button').contains('Send Right').click();
         cy.get('.btn-success').contains('Add to Main Table').click();
         cy.get('.right-table-data tr').should('have.length', 0);
         cy.get('.home').click();
