@@ -55,7 +55,7 @@ jobs:
       - name: Run Cypress tests
         uses: cypress-io/github-action@v6
         with:
-          start: npm run start
+          start: npx cypress open
           wait-on: 'http://localhost:3000'
           browser: chrome
           spec: 'cypress/e2e/0-custom-tests/**/*.cy.js'
