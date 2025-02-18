@@ -39,6 +39,8 @@ describe('Todo App', () => {
       .invoke('text')
       .then((taskId) => {
         cy.get('@firstRow').find('button').contains('Send Right').click();
+        // check if the right table has 1 row
+        cy.get('.right-table-data tr').should('have.length', 1);
         cy.get('.btn-success').contains('Add to Main Table').click();
         cy.get('.right-table-data tr').should('have.length', 0);
         cy.get('.home').click();
