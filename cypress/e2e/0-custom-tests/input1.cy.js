@@ -63,7 +63,7 @@ describe('Todo App', () => {
         cy.get('.btn-success').contains('Add to Main Table').click();
         cy.get('.right-table-data tr').should('have.length', 0);
         cy.get('.home').click();
-        cy.get('.table-data').should('have.length', 1);
+        cy.get('.table-data tr').should('have.length', 1);
         cy.get('.table-data')
           .first()
           .get('td')

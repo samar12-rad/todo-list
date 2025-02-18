@@ -109,15 +109,15 @@ describe('Todo App', () => {
       .first()
       .invoke('text')
       .then((taskId) => {
+        cy.wrap(taskId).as('taskId1');
         cy.get('.btn-success').contains('Add to Main Table').click();
         cy.get('.right-table-data tr').should('have.length', 0);
         cy.get('.home').click();
-        cy.get('.table-data').should('have.length', 1);
-        cy.get('.table-data')
-          .first()
-          .get('td')
-          .first()
-          .should('have.text', taskId);
+        // check if there are two rows in the table
+        cy.get('.table-data tr').should('have.length', 2);
+        // find a row which has the same task.id as the one saved earlier
+        cy.get('.table-data tr').as('taskRow');
+        cy.get('@taskRow').contains(taskId).should('have.text', taskId);
       });
     cy.get('.input2').click();
     cy.get('.left-table-data tr').first().as('firstRow');
@@ -129,15 +129,15 @@ describe('Todo App', () => {
       .first()
       .invoke('text')
       .then((taskId) => {
+        cy.wrap(taskId).as('taskId2');
         cy.get('.btn-success').contains('Add to Main Table').click();
         cy.get('.right-table-data tr').should('have.length', 0);
         cy.get('.home').click();
-        cy.get('.table-data').should('have.length', 1);
-        cy.get('.table-data')
-          .first()
-          .get('td')
-          .first()
-          .should('have.text', taskId);
+        // check if there are two rows in the table
+        cy.get('.table-data tr').should('have.length', 3);
+        // find a row which has the same task.id as the one saved earlier
+        cy.get('.table-data tr').as('taskRow');
+        cy.get('@taskRow').contains(taskId).should('have.text', taskId);
       });
     cy.get('.clear-todo').click();
 
