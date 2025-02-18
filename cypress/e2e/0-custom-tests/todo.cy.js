@@ -102,32 +102,42 @@ describe('Todo App', () => {
     cy.get('.input1').click();
     cy.get('.left-table-data tr').first().as('firstRow');
     // save the task.id of the first row for later
-    cy.get('@firstRow')
+    cy.get('@firstRow').find('button').contains('Send Right').click();
+    cy.get('.right-table-data tr').first().as('rightFirstRow');
+    cy.get('@rightFirstRow')
       .find('td')
       .first()
       .invoke('text')
-      .then((taskId1) => {
-        // save taskId1 as a variable
-        cy.wrap(taskId1).as('taskId1');
-        cy.get('@firstRow').find('button').contains('Send Right').click();
+      .then((taskId) => {
         cy.get('.btn-success').contains('Add to Main Table').click();
         cy.get('.right-table-data tr').should('have.length', 0);
         cy.get('.home').click();
+        cy.get('.table-data').should('have.length', 1);
+        cy.get('.table-data')
+          .first()
+          .get('td')
+          .first()
+          .should('have.text', taskId);
       });
     cy.get('.input2').click();
     cy.get('.left-table-data tr').first().as('firstRow');
     // save the task.id of the first row for later
-    cy.get('@firstRow')
+    cy.get('@firstRow').find('button').contains('Send Right').click();
+    cy.get('.right-table-data tr').first().as('rightFirstRow');
+    cy.get('@rightFirstRow')
       .find('td')
       .first()
       .invoke('text')
-      .then((taskId2) => {
-        // save taskId2 as a variable
-        cy.wrap(taskId2).as('taskId2');
-        cy.get('@firstRow').find('button').contains('Send Right').click();
+      .then((taskId) => {
         cy.get('.btn-success').contains('Add to Main Table').click();
         cy.get('.right-table-data tr').should('have.length', 0);
         cy.get('.home').click();
+        cy.get('.table-data').should('have.length', 1);
+        cy.get('.table-data')
+          .first()
+          .get('td')
+          .first()
+          .should('have.text', taskId);
       });
     cy.get('.clear-todo').click();
 
