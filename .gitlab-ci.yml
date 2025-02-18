@@ -1,0 +1,42 @@
+
+image: cypress/browsers:node-18.15.0-chrome-111.0.5563.146-1-ff-111.0.1-edge-111.0.1661.62-1
+
+stages:
+  - test
+  - allure
+  - deploy
+
+cypress_tests:
+  stage: test
+  script:
+    - npm i
+    - npx cypress run --browser chrome --env allure=true
+  artifacts:
+    paths:
+      - cypress/screenshots/
+      - cypress/videos/
+      - allure-results/
+
+allure_report:
+  stage: allure
+  dependencies:
+    - cypress_tests
+  before_script:
+    - npm i --save-dev allure-commandline 
+  script:
+    - allure generate allure-results --clean -o allure-report
+  artifacts:
+    when: always
+    paths:
+      - allure-report
+
+pages:
+  stage: deploy
+  dependencies:
+    - allure_report
+  script:
+    - cp allure-report public/
+  artifacts:
+    when: always
+    paths:
+      - public/
