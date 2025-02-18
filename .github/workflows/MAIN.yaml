@@ -9,16 +9,6 @@ on:
       - master
       - Checking-CI
 
-name: Lint and Test
-
-on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
-
 jobs:
   lint:
     name: Run ESLint
@@ -26,18 +16,18 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      
+
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 18
-      
+
       - name: Install dependencies
         run: npm install
-      
+
       - name: Run ESLint
         run: npm run lint
-  
+
   test:
     name: Run Cypress Tests
     runs-on: ubuntu-latest
@@ -45,23 +35,23 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      
+
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 18
-      
+
       - name: Install dependencies
         run: npm install
-      
+
       - name: Start application
         run: npm run dev &
         env:
           NODE_ENV: test
-      
+
       - name: Wait for application to be ready
         run: sleep 10
-      
+
       - name: Run Cypress tests
         uses: cypress-io/github-action@v6
         with:
