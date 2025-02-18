@@ -77,7 +77,7 @@ const Home = () => {
     <div className="w-full min-h-screen flex flex-col items-center px-8">
       <h1 className="text-5xl font-bold mt-15">Welcome to the Todo List</h1>
       <p className="text-xl mt-4">
-        Manage your tasks efficiently and effectively
+        Manage your tasks efficiently and effectively with ease
       </p>
       <div className="w-full flex items-center mt-40 h-[30vh] gap-4">
         <div className="w-full items-center flex h-full flex-col gap-4">
