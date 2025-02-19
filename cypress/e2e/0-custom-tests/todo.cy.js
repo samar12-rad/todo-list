@@ -160,7 +160,7 @@ describe('Todo App', () => {
     cy.get('@taskId2').then((taskId2) => {
       cy.get('.right-table-data tr')
         .first()
-        .get('td')
+        .find('td')
         .first()
         .should('have.text', taskId2);
     });
