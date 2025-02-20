@@ -6,6 +6,7 @@ import {
   rightTable2DataState,
   tableDataState,
 } from '../state/todoState';
+import { toast, ToastContainer } from 'react-toastify';
 
 const Home = () => {
   const navigate = useNavigate();
@@ -25,8 +26,19 @@ const Home = () => {
     return `U${nextNumericPart.toString().padStart(2, '0')}`;
   };
 
+  const checkIfRowExistsInMainTable = (row) => {
+    const rowExists = tasks.find((item) => item.title === row.title);
+    if (rowExists) {
+      return true;
+    }
+  };
+
   const handleAddTask = (e) => {
     e.preventDefault();
+    if (checkIfRowExistsInMainTable({ title: newTask })) {
+      toast.error('Task already exists in Main Table');
+      return;
+    }
     if (newTask.trim() === '') return;
     const newTaskObj = { id: generateNextId(), title: newTask, pageid: 'Home' };
     setTasks([...tasks, newTaskObj]);
@@ -74,12 +86,14 @@ const Home = () => {
   };
 
   return (
-    <div className="w-full min-h-screen flex flex-col items-center px-8">
-      <h1 className="text-5xl font-bold mt-15">Welcome to the Todo List</h1>
-      <p className="text-xl mt-4">
+    <div className="w-full flex flex-col items-center px-8">
+      <h1 className="text-5xl font-bold md:mt-15 text-center">
+        Welcome to the Todo List
+      </h1>
+      <p className="text-xl mt-4 text-center">
         Manage your tasks efficiently and effectively with ease
       </p>
-      <div className="w-full flex items-center mt-40 h-[30vh] gap-4">
+      <div className="w-full flex lg:flex-row flex-col items-center mt-10 md:mt-40 lg:h-[30vh] gap-4">
         <div className="w-full items-center flex h-full flex-col gap-4">
           <h2 className="text-2xl font-bold">Create your Task</h2>
           <form
@@ -119,9 +133,9 @@ const Home = () => {
           </div>
         </div>
       </div>
-      <div className="flex items-center mt-8 w-full justify-center">
-        <h2 className="text-2xl font-bold ">Your Tasks</h2>
-        <div className="flex items-center w-fit h-fit absolute right-10">
+      <div className="relative flex items-center mt-20 md:mt-8 w-full justify-center">
+        <h2 className="text-2xl font-bold mb-10 md:mb-0">Your Tasks</h2>
+        <div className="flex items-center w-fit h-fit absolute md:right-10 top-5 md:top-[-20px]">
           <button
             onClick={handleClearTasks}
             className="clear-todo btn btn-error w-20 m-4"
@@ -139,15 +153,17 @@ const Home = () => {
       <table className="mt-4 w-full max-w-full table-auto border-collapse border border-gray-200">
         <thead>
           <tr>
-            <th className="border border-gray-200 p-2 w-[20vw]">ID</th>
-            <th className="border border-gray-200 p-2 w-[50vw]">title</th>
+            <th className="border border-gray-200 p-2 lg:w-[10vw] md:w-[10vw] sm:w-[7vw] w-[10vw]">
+              ID
+            </th>
+            <th className="border border-gray-200 p-2 w-[70vw]">title</th>
             <th className="border border-gray-200 p-2 w-[20vw]">Actions</th>
           </tr>
         </thead>
         <tbody className="table-data">
           {tasks.map((task, index) => (
             <tr key={index}>
-              <td className="border border-gray-200 p-2 {`${task.id}`}">
+              <td className="border border-gray-200 p-2 {`${task.id}`} text-center">
                 {task.id}
               </td>
               <td className="border border-gray-200 p-2">
@@ -158,21 +174,21 @@ const Home = () => {
                       : task.pageid === 'input2'
                         ? 'btn-accent'
                         : 'btn-primary'
-                  } todo-list-item  btn w-full p-2 rounded-2xl`}
+                  } todo-list-item  btn w-full h-fit p-2 rounded-2xl`}
                 >
                   {' '}
                   {task.title}
                 </div>
               </td>
-              <td className="border border-gray-200 p-2 flex gap-4 justify-center">
+              <td className="border border-gray-200 p-2 flex gap-4 flex-wrap justify-center">
                 <button
                   onClick={() => handleSendBack(task.id)}
-                  className="send-back-todo btn btn-info"
+                  className="send-back-todo btn btn-info w-full md:w-fit"
                 >
                   Send Back
                 </button>
                 <button
-                  className="delete-todo btn btn-danger"
+                  className="delete-todo btn btn-danger w-full md:w-fit"
                   onClick={() => handleDeleteTask(task.id)}
                 >
                   Delete
@@ -182,6 +198,7 @@ const Home = () => {
           ))}
         </tbody>
       </table>
+      <ToastContainer />
     </div>
   );
 };

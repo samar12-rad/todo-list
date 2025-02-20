@@ -4,6 +4,7 @@ import { rightTable1DataState, tableDataState } from '../state/todoState';
 import { useRecoilState } from 'recoil';
 import { useNavigate } from 'react-router-dom';
 import { TailSpin } from 'react-loader-spinner';
+import { toast, ToastContainer } from 'react-toastify';
 
 const Input1 = () => {
   const nav = useNavigate();
@@ -34,7 +35,26 @@ const Input1 = () => {
       });
   }, [refresh]);
 
+  const checkIfRowExistsInMainTable = (row) => {
+    const rowExists = tableData.find((item) => item.title === row.title);
+    if (rowExists) {
+      return true;
+    }
+  };
+
   const moveRowToRightTable = (row) => {
+    if (checkIfRowExistsInMainTable(row)) {
+      toast.error('Task already exists in Main Table', {
+        position: 'top-right',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      return;
+    }
     const rowWithPageId = { ...row, pageid: 'input1' };
     setRightTableData([...rightTableData, rowWithPageId]);
     setLeftTableData(leftTableData.filter((item) => item.id !== row.id));
@@ -162,6 +182,7 @@ const Input1 = () => {
           </table>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };
