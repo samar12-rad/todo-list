@@ -78,19 +78,21 @@ const Input1 = () => {
     <div className="relative w-screen h-fit min-h-screen p-4">
       <button
         onClick={backToHome}
-        className="home absolute btn btn-error right-5 top-5 z-10"
+        className="home absolute btn btn-error right-2 top-2 md:right-5 md:top-5 z-10 scale-90 md:scale-100"
       >
         Back to Home Page
       </button>
-      <h1 className="text-4xl font-bold text-center mb-4">Input 1</h1>
+      <h1 className="text-4xl font-bold text-center mt-10 md:mt-0 mb-4">
+        Input 1
+      </h1>
       <h2 className="text-2xl text-center mb-8">
         Todo List - Manage your tasks efficiently
       </h2>
-      <div className="flex justify-around gap-3">
-        <div className="w-1/2 flex flex-col items-center">
+      <div className="flex flex-col-reverse md:flex-row items-center md:items-start justify-around gap-2 md:gap-3">
+        <div className="md:w-1/2 flex flex-col items-center">
           <h3 className="text-xl font-semibold mb-2">Available Tasks</h3>
           <button
-            className="btn btn-success w-50 mb-2 refresh"
+            className="btn btn-success w-30 md:w-50 mb-2 refresh"
             onClick={refreshTableData}
           >
             Refresh
@@ -138,13 +140,13 @@ const Input1 = () => {
             </table>
           )}
         </div>
-        <div className="w-[10vw] flex flex-col items-center justify-center">
+        <div className="w-[10vw] h-[20vh] md:h-[90vh] flex flex-col rotate-90 md:rotate-0 items-center justify-center">
           <button className="btn btn-circle bg-amber-400 m-4">{`>`}</button>
         </div>
-        <div className="w-1/2 flex flex-col items-center">
+        <div className="md:w-1/2 w-full flex flex-col items-center">
           <h3 className="text-xl font-semibold mb-2">Selected Tasks</h3>
           <button
-            className="btn btn-success w-50 mb-2"
+            className="btn btn-success w-30 md:w-50 mb-2"
             onClick={addrightTableDataToTableData}
           >
             Add to Main Table
@@ -152,7 +154,7 @@ const Input1 = () => {
           <table className="table w-full">
             <thead>
               <tr>
-                <th className="w-[10%]">ID</th>
+                <th className="w-0 md:w-[10%]">ID</th>
                 <th className="w-[70%]">Title</th>
                 <th>Action</th>
               </tr>
